@@ -132,32 +132,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     }
 
 
-
-
-/*
-                    Snackbar.make(view, "Are you sure restore backup ?", Snackbar.LENGTH_LONG)
-                            .setAction("Yes", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    if (App.checkDbFileIsExist() == true) {
-                                        RealmBackupRestore realmBackupRestore = new RealmBackupRestore(DashboardActivity.this, realm);
-                                        realmBackupRestore.restore();
-
-                                        Intent intent = new Intent(DashboardActivity.this, DashboardActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-
-                                    }
-                                    else
-                                    {
-                                        App.downloadPhoto2();
-                                    }
-
-                                }
-                            }).show();
-
-                    */
                 }
             });
 
@@ -224,6 +198,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             //realm = Realm.getInstance(realmConfiguration);
             realm = Realm.getInstance(App.getRealmConfiguration());
 
+            //Clear All Data
+            //RealmBackupRestore.setClearDatabase(realm);
+
            /*
            RealmBackupRestore realmBackupRestore = new RealmBackupRestore(DashboardActivity.this, realm);
             //realmBackupRestore.backup();
@@ -237,8 +214,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             if (realm != null && arrayListJsonDashboardModel != null) {
                 //  # !@#!@#
-                 insertDashboard();
-                //getDataDashboard();
+                // insertDashboard();
+                getDataDashboard();
             } else {
                 App.showLog("===no insert database dashboard==");
             }

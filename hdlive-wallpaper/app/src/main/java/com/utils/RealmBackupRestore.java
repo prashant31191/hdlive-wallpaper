@@ -38,7 +38,7 @@ public class RealmBackupRestore {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    public RealmBackupRestore(Activity activity,Realm realm) {
+    public RealmBackupRestore(Activity activity, Realm realm) {
         this.realm = realm;
         this.activity = activity;
     }
@@ -62,7 +62,7 @@ public class RealmBackupRestore {
             // copy current realm to backup file
             //realm.writeCopyTo(exportRealmFile); // for the simple database backup
 
-            realm.writeEncryptedCopyTo(exportRealmFile,App.getEncryptRawKey()); // for the encypted database backup
+            realm.writeEncryptedCopyTo(exportRealmFile, App.getEncryptRawKey()); // for the encypted database backup
 
 
         } catch (Exception e) {
@@ -102,8 +102,7 @@ public class RealmBackupRestore {
             }
             outputStream.close();
 
-            if(App.deleteFile()==true)
-            {
+            if (App.deleteFile() == true) {
                 App.showLog("===deleteFile--on downloaded--===");
             }
             return file.getAbsolutePath();
@@ -117,7 +116,7 @@ public class RealmBackupRestore {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        if(permission != PackageManager.PERMISSION_GRANTED){
+        if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                     activity,
                     PERMISSIONS_STORAGE,
@@ -125,7 +124,28 @@ public class RealmBackupRestore {
             );
         }
     }
-    private String dbPath(){
+
+    private String dbPath() {
         return realm.getPath();
     }
+
+
+    //Delete All Data
+
+    public static void setClearDatabase(Realm realm) {
+        try {
+            //delete all data
+            realm.executeTransaction(new Realm.Transaction()
+
+            {
+                @Override
+                public void execute(Realm realm) {
+                    realm.deleteAll();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

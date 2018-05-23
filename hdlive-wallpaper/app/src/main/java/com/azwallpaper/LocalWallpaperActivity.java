@@ -182,7 +182,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
 
                 if (realm != null) {
 
-                    insertValues();
+                    //insertValues();
                     getWallpaperValues(false);
 
                 } else {
