@@ -41,7 +41,7 @@
         android:src="@drawable/ic_search_black_36dp"
         app:backgroundTint="@color/material_redA700"
         android:tint="@color/white"
-        app:elevation="3dp"
+        app:elevation="@dimen/x3d"
         android:layout_margin="@dimen/fab_margin"/>
 
 
@@ -62,7 +62,7 @@
         android:src="@drawable/ic_backup_black_36dp"
         app:backgroundTint="@color/material_redA700"
         android:tint="@color/white"
-        app:elevation="3dp"
+        app:elevation="@dimen/x3d"
         />
 
         <android.support.design.widget.FloatingActionButton
@@ -72,11 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/fabCreateBackup"
             android:src="@drawable/ic_refresh_white_36dp"
-            app:backgroundTint="@color/material_redA700"
+            app:backgroundTint="@color/md_tealA700"
             android:tint="@color/white"
-            app:elevation="3dp"
-            android:layout_marginLeft="10dp"
-
+            app:elevation="@dimen/x3d"
+            android:layout_marginLeft="@dimen/x10d"
 
             />
     </RelativeLayout>

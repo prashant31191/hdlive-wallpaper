@@ -80,7 +80,7 @@ public class App extends Application {
 
     String TAG = "====App==";
     // app folder name
-    public static String APP_FOLDERNAME = "azwallpaper";
+    public static String APP_FOLDERNAME = "3wallpaper";
     public static String ADS_ID_BANNER = "ca-app-pub-4346653435295459/3341327605";
     public static String ADS_ID_BANNER2 = "ca-app-pub-4346653435295459/7033160603";
     public static String ADS_ID_RVID = "ca-app-pub-4346653435295459/1206118856";
@@ -94,7 +94,7 @@ public class App extends Application {
     public static String database_url = "https://github.com/prashant31191/hdlive-wallpaper/blob/master/hdlive-wallpaper/app/apk_keystore/files/11download.realm?raw=true";
 
     //String splash_url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/bg_image.jpg";
-    public static String splash_url = "https://github.com/prashant31191/hdlive-wallpaper/blob/master/hdlive-wallpaper/app/apk_keystore/files/11download.realm?raw=true";
+    public static String splash_url = "https://github.com/prashant31191/hdlive-wallpaper/raw/master/hdlive-wallpaper/app/apk_keystore/files/bg_image.jpg";
 
     /*
     // Sending side
@@ -362,21 +362,21 @@ public class App extends Application {
 
 
     public static void showLog(String strMessage) {
-        Log.v("==App==", "--strMessage--" + strMessage);
+        Log.d("==App==", "--strMessage--" + strMessage);
     }public static void showLog(String strMessage1,String strMessage) {
-        Log.v("==App tag=="+strMessage1, "--strMessage--" + strMessage);
+        Log.d("==App tag=="+strMessage1, "--strMessage--" + strMessage);
     }
 
 
     public static void showLogApi(String strMessage) {
-        //Log.v("==App==", "--strMessage--" + strMessage);
+        //Log.d("==App==", "--strMessage--" + strMessage);
         System.out.println("--API-MESSAGE--" + strMessage);
 
         //  appendLogApi("c_api", strMessage);
     }
 
     public static void showLogApi(String strOP, String strMessage) {
-        //Log.v("==App==", "--strMessage--" + strMessage);
+        //Log.d("==App==", "--strMessage--" + strMessage);
         System.out.println("--API-strOP--" + strOP);
         System.out.println("--API-MESSAGE--" + strMessage);
 
@@ -385,16 +385,16 @@ public class App extends Application {
 /*
 
     public static void showLogApiRespose(String op, Response response) {
-        //Log.w("=op==>" + op, "response==>");
+        //Log.d("=op==>" + op, "response==>");
         String strResponse = new Gson().toJson(response.body());
-        Log.i("=op==>" + op, "response==>" + strResponse);
+        Log.d("=op==>" + op, "response==>" + strResponse);
         // appendLogApi(op + "_r_api", strResponse);
     }
 */
 
 
     public static void showLogResponce(String strTag, String strResponse) {
-        Log.i("==App==strTag==" + strTag, "--strResponse--" + strResponse);
+        Log.d("==App==strTag==" + strTag, "--strResponse--" + strResponse);
         //appendLogApi(strTag + "_r_api", strResponse);
     }
 
@@ -504,7 +504,7 @@ public class App extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-           // Log.v("Text Data", byteArrayOutputStream.toString());
+           // Log.d("Text Data", byteArrayOutputStream.toString());
             try {
 
                 // Parse the data into jsonobject to get original data in form of json.
@@ -530,7 +530,7 @@ public class App extends Application {
                     jsonImageModel.thumbnail_url = thumbnail_url;
                     arrayListDLocationModel.add(jsonImageModel);
 
-                 //   Log.i("=====","==title=="+title);
+                 //   Log.d("=====","==title=="+title);
                 }
                 return arrayListDLocationModel;
             } catch (Exception e) {
@@ -567,7 +567,7 @@ public class App extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.v("Text Data", byteArrayOutputStream.toString());
+            Log.d("Text Data", byteArrayOutputStream.toString());
             try {
 
                 // Parse the data into jsonobject to get original data in form of json.
@@ -593,7 +593,7 @@ public class App extends Application {
                     jsonImageModel.image = image;
                     arrayListDLocationModel.add(jsonImageModel);
 
-                    Log.i("=====","==name=="+name);
+                    Log.d("=====","==name=="+name);
                 }
                 return arrayListDLocationModel;
             } catch (Exception e) {

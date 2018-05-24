@@ -1,19 +1,22 @@
 package com.azwallpaper;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.utils.StaticData;
+import com.utils.StringUtils;
 
 public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private static final int KEEP_TIME = 2000;
+    private static final int KEEP_TIME = 3000;
     private Handler handler;
 
     @Override
@@ -29,13 +32,20 @@ public class SplashActivity extends AppCompatActivity {
             handler = new Handler();
 
             ImageView ivSplash = findViewById(R.id.ivSplash);
+            TextView tvTitle = findViewById(R.id.tvTitle);
+            tvTitle.setTypeface(App.getFont_Bold());
+
+            if (StringUtils.isValidString(App.sharePrefrences.getStringPref(StaticData.key_splash_bg))) {
+
+            } else {
+                App.sharePrefrences.setPref(StaticData.key_splash_bg, App.splash_url);
+            }
 
 
             Glide.with(SplashActivity.this)
-                    .load(App.splash_url)
+                    .load(StringUtils.setString(App.sharePrefrences.getStringPref(StaticData.key_splash_bg)))
                     .placeholder(R.drawable.ic_placeholder)
                     .into(ivSplash);
-
 
 
             handler.postDelayed(new Runnable() {
@@ -49,9 +59,7 @@ public class SplashActivity extends AppCompatActivity {
             }, KEEP_TIME);
 
             Settings.System.putInt(getContentResolver(), Settings.System.SOUND_EFFECTS_ENABLED, 1); //To Enable
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

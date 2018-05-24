@@ -9,7 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.NavUtils;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -19,7 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,19 +44,16 @@ import com.model.JsonImageModel;
 import com.squareup.picasso.Transformation;
 import com.utils.Blur;
 import com.utils.RealmBackupRestore;
+import com.utils.StaticData;
 import com.utils.TouchImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 
@@ -73,7 +70,8 @@ public class LocalWallpaperActivity extends AppCompatActivity {
     private static final int COLUMN_NUM = 2;
     private GalleryAdapter mAdapter;
     private DefaultAnimatedAdapter defaultAdapter;
-
+    FloatingActionButton fabDownload;
+    FloatingActionButton fabShare;
     RelativeLayout rlImage;
     TouchImageView ivFullScreen;
     ImageView ivClose;
@@ -110,6 +108,8 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
             rlImage = findViewById(R.id.rlImage);
+            fabDownload = findViewById(R.id.fabDownload);
+            fabShare = findViewById(R.id.fabShare);
             ivFullScreen = findViewById(R.id.ivFullScreen);
             ivClose = findViewById(R.id.ivClose);
             tvSetWallpaper = findViewById(R.id.tvSetWallpaper);
@@ -123,12 +123,47 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                setWallpaper();
+                                setWallpaper(3);
                             }
                         }, 500);
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Please wait Image is Loading...!", Toast.LENGTH_LONG).show();
+                        App.showSnackBar(tvSetWallpaper, "Please wait downloading image....!");
+                    }
+                }
+            });
+
+            fabDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bitmap != null) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setWallpaper(1);
+                            }
+                        }, 500);
+
+                    } else {
+                        App.showSnackBar(tvSetWallpaper, "Please wait downloading image....!");
+                    }
+                }
+            });
+            fabShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bitmap != null) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setWallpaper(2);
+                            }
+                        }, 500);
+
+                    } else {
+                        App.showSnackBar(tvSetWallpaper, "Please wait downloading image....!");
                     }
                 }
             });
@@ -138,6 +173,8 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     progressBar.setVisibility(View.GONE);
                     rlImage.setVisibility(View.GONE);
+                    fabDownload.setVisibility(View.GONE);
+                    fabShare.setVisibility(View.GONE);
 
 
                 }
@@ -417,10 +454,20 @@ public class LocalWallpaperActivity extends AppCompatActivity {
         return new ArrayList<JsonImageModel>(list);
     }
 
-    private void setWallpaper() {
-        String filename = "wallpaper.png";
-        File sd = Environment.getExternalStorageDirectory();
-        File dest = new File(sd, filename);
+    private void setWallpaper(int checkType) // 1 - download 2-share 3-set wallpaper
+    {
+
+        Long tsLong = System.currentTimeMillis() / 1000;
+        String ts = tsLong.toString();
+
+        String filename = ts + "_photo.png";
+        //File sd = Environment.getExternalStorageDirectory();
+
+        String sdCardPath = Environment.getExternalStorageDirectory().toString();
+        File sd = new File(sdCardPath + "/" + App.APP_FOLDERNAME);
+
+
+        final File dest = new File(sd, filename);
 
         try {
             FileOutputStream out = new FileOutputStream(dest);
@@ -428,16 +475,39 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             out.flush();
             out.close();
 
-
-            Uri uri = Uri.fromFile(dest);
-            Intent intent = new Intent(Intent.ACTION_ATTACH_DATA);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.setDataAndType(uri, "image/*");
-            intent.putExtra("mimeType", "image/*");
-
             progressBar.setVisibility(View.GONE);
-            this.startActivity(Intent.createChooser(intent, "Set as :"));
 
+            final Uri uri = Uri.fromFile(dest);
+            if (checkType == 3) {
+
+                Intent intent = new Intent(Intent.ACTION_ATTACH_DATA);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setDataAndType(uri, "image/*");
+                intent.putExtra("mimeType", "image/*");
+
+                this.startActivity(Intent.createChooser(intent, "Set as"));
+            } else if (checkType == 2) {
+
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/*");
+                share.putExtra(Intent.EXTRA_STREAM, uri);
+                this.startActivity(Intent.createChooser(share, "Share wallpaper"));
+
+            } else if (checkType == 1) {
+
+                Snackbar.make(tvSetWallpaper, "Wallpaper Download Success", Snackbar.LENGTH_LONG)
+                        .setAction("Open", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setDataAndType(uri, "image/*");
+                                startActivity(intent);
+                            }
+                        }).show();
+
+            }
         } catch (Exception e) {
             progressBar.setVisibility(View.GONE);
             e.printStackTrace();
@@ -543,15 +613,20 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //App.expand2(rlImage);
+                    bitmap = null;
                     rlImage.setVisibility(View.VISIBLE);//
+                    fabDownload.setVisibility(View.VISIBLE);//
+                    fabShare.setVisibility(View.VISIBLE);//
                     progressBar.setVisibility(View.VISIBLE);
 
-                    App.showLog("==img==" + mList.get(position).thumbnail_url);
+                    App.splash_url = mList.get(position).thumbnail_url;
+                    App.showLog("==img==" + App.splash_url);
 
-                    Glide.with(LocalWallpaperActivity.this).load(mList.get(position).image_path).asBitmap().into(new SimpleTarget<Bitmap>() {
+                    Glide.with(LocalWallpaperActivity.this).load(App.splash_url).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                             try {
+                                App.sharePrefrences.setPref(StaticData.key_splash_bg, App.splash_url);
                                 bitmap = resource;
                                 ivFullScreen.setImageBitmap(resource);
                                 progressBar.setVisibility(View.GONE);
@@ -560,7 +635,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    Glide.with(LocalWallpaperActivity.this).load(mList.get(position).image_path).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
+                    Glide.with(LocalWallpaperActivity.this).load(App.splash_url).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
 
                 }
             });
@@ -671,15 +746,20 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //App.expand2(rlImage);
+                    bitmap = null;
                     rlImage.setVisibility(View.VISIBLE);//
+                    fabDownload.setVisibility(View.VISIBLE);//
+                    fabShare.setVisibility(View.VISIBLE);//
                     progressBar.setVisibility(View.VISIBLE);
 
-                    App.showLog("==img==" + items.get(position).thumbnail_url);
+                    App.splash_url = items.get(position).thumbnail_url;
+                    App.showLog("==img==" + App.splash_url);
 
                     Glide.with(LocalWallpaperActivity.this).load(items.get(position).image_path).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                             try {
+                                App.sharePrefrences.setPref(StaticData.key_splash_bg, App.splash_url);
                                 bitmap = resource;
                                 ivFullScreen.setImageBitmap(resource);
                                 progressBar.setVisibility(View.GONE);
@@ -688,7 +768,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    Glide.with(LocalWallpaperActivity.this).load(items.get(position).image_path).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
+                    Glide.with(LocalWallpaperActivity.this).load(items.get(position).image_path).placeholder(R.color.light_gray).into(ivFullScreen);
 
                 }
             });
@@ -696,7 +776,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             Glide.with(LocalWallpaperActivity.this)
                     .load(customObject.thumbnail_url)
                     .thumbnail(0.5f)
-                    .placeholder(R.drawable.ic_placeholder)
+                    .placeholder(R.color.light_gray)
                     .into(holder.mImageView);
         }
 
@@ -712,7 +792,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                 tvTitle = itemView.findViewById(R.id.title_custom_item);
                 rlMainAnim = itemView.findViewById(R.id.rlMainAnim);
 
-                tvTitle.setTypeface(App.getFont_Regular());
+                tvTitle.setTypeface(App.getFont_Bold());
             }
         }
 

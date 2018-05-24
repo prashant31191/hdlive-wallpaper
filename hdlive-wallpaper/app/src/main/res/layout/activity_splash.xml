@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/material_grey200"
     >
 <ImageView
     android:id="@+id/ivSplash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:scaleType="centerCrop"
-    android:alpha="0.8"
     />
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x50d"
         android:text="@string/app_name"
-        android:textSize="28dp"
-        android:textColor="#a111"
-
+        android:textSize="@dimen/t28d"
+        android:textColor="@color/txt_black"
+        android:alpha="0.9"
+        android:gravity="center"
+        android:background="@drawable/bg_shadow"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="14dp"/>
+        />
 </RelativeLayout>

@@ -10,10 +10,7 @@
         android:id="@+id/cvCard"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x250d"
-        android:foreground="?android:attr/selectableItemBackground"
-
-
-        >
+        android:foreground="?android:attr/selectableItemBackground">
 <!--
         app:cardBackgroundColor="@color/material_bluegrey100"
         app:cardCornerRadius="@dimen/x3d"

@@ -342,8 +342,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void shareApp()
-    {
+
+    private void shareApp() {
         try {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
@@ -352,7 +352,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             sAux = sAux + "https://www.amazon.com/s/ref=bl_sr_mobile-apps/131-3886681-0807921?_encoding=UTF8&field-brandtextbin=wewer&node=2350149011 \n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
             startActivity(Intent.createChooser(i, "Share application"));
-        } catch(Exception e) {
+        } catch (Exception e) {
             //e.toString();
         }
 
@@ -451,7 +451,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     .resize(10, 10)
                     //.fit()
                     //.centerCrop()
-
+                    .placeholder(R.drawable.ic_placeholder)
                     .error(R.mipmap.ic_launcher)
                     .transform(blurTransformation)
                     .into(holder.mImageView, new com.squareup.picasso.Callback() {
@@ -505,10 +505,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     }
 
 
-
-    private void setupAds()
-    {
-        try{
+    private void setupAds() {
+        try {
             // Initialize the Mobile Ads SDK.
             MobileAds.initialize(this, App.APP_ID);
 
@@ -560,18 +558,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             });
 
             loadRewardedVideoAd();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-
-
     private void loadRewardedVideoAd() {
-        if (mRewardedVideoAd !=null && !mRewardedVideoAd.isLoaded()) {
+        if (mRewardedVideoAd != null && !mRewardedVideoAd.isLoaded()) {
             mRewardedVideoAd.loadAd(App.ADS_ID_RVID, new AdRequest.Builder().build());
         }
     }
@@ -579,10 +573,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private void showRewardedVideo() {
         Log.i(TAG, "====showRewardedVideo====");
 
-        if (mRewardedVideoAd !=null && mRewardedVideoAd.isLoaded()) {
+        if (mRewardedVideoAd != null && mRewardedVideoAd.isLoaded()) {
             mRewardedVideoAd.show();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
