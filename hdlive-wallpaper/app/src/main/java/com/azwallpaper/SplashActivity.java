@@ -30,10 +30,10 @@ public class SplashActivity extends AppCompatActivity {
 
             ImageView ivSplash = findViewById(R.id.ivSplash);
 
-            String splash_url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/bg_image.jpg";
+
             Glide.with(SplashActivity.this)
-                    .load(splash_url)
-                    .placeholder(R.drawable.bg_image)
+                    .load(App.splash_url)
+                    .placeholder(R.drawable.ic_placeholder)
                     .into(ivSplash);
 
 

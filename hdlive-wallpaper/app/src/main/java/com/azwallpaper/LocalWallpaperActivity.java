@@ -183,7 +183,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                 if (realm != null) {
 
                     //insertValues();
-                    getWallpaperValues(false);
+                    getWallpaperValues(true);
 
                 } else {
                     App.showLog("=====realm===null==");
@@ -560,7 +560,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    Glide.with(LocalWallpaperActivity.this).load(mList.get(position).image_path).placeholder(R.color.light_gray).into(ivFullScreen);
+                    Glide.with(LocalWallpaperActivity.this).load(mList.get(position).image_path).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
 
                 }
             });
@@ -568,7 +568,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             Glide.with(LocalWallpaperActivity.this)
                     .load(item.thumbnail_url)
                     .thumbnail(0.5f)
-                    .placeholder(R.color.light_gray)
+                    .placeholder(R.drawable.ic_placeholder)
                     .into(holder.mImageView);
 
 
@@ -688,7 +688,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    Glide.with(LocalWallpaperActivity.this).load(items.get(position).image_path).placeholder(R.color.light_gray).into(ivFullScreen);
+                    Glide.with(LocalWallpaperActivity.this).load(items.get(position).image_path).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
 
                 }
             });
@@ -696,7 +696,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             Glide.with(LocalWallpaperActivity.this)
                     .load(customObject.thumbnail_url)
                     .thumbnail(0.5f)
-                    .placeholder(R.color.light_gray)
+                    .placeholder(R.drawable.ic_placeholder)
                     .into(holder.mImageView);
         }
 

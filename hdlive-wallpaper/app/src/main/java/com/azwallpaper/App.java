@@ -90,6 +90,12 @@ public class App extends Application {
     public static String RealmEncryptionKey = "f263575e7b00a977a8e915feb9bfb2f992b2b8f11eaaaaaaa46523132131689465413132132165469487987987643545465464abbbbbccdddffff111222333";
     public static RealmConfiguration realmConfiguration;
 
+
+    public static String database_url = "https://github.com/prashant31191/hdlive-wallpaper/blob/master/hdlive-wallpaper/app/apk_keystore/files/11download.realm?raw=true";
+
+    //String splash_url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/bg_image.jpg";
+    public static String splash_url = "https://github.com/prashant31191/hdlive-wallpaper/blob/master/hdlive-wallpaper/app/apk_keystore/files/11download.realm?raw=true";
+
     /*
     // Sending side
     public byte[] bytes64Key = App.RealmEncryptionKey.getBytes("UTF-8");
@@ -750,15 +756,15 @@ public class App extends Application {
 
             String folderName = "files";
 
-            // String url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/download.realm";
-            // no encrypt - String url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/sm-download.realm";
-            String url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/11download.realm";
-            URL urlObj = new URL(url);
+            //https://github.com/prashant31191/hdlive-wallpaper/blob/master/hdlive-wallpaper/app/apk_keystore/files/11download.realm?raw=true
+            // -old - String url = "https://raw.githubusercontent.com/prashant31191/BitTiger-MiniFlickr/master/app/apk_keystore/files/11download.realm";
+
+            URL urlObj = new URL(database_url);
             String urlPath = urlObj.getPath();
             String fileName = urlPath.substring(urlPath.lastIndexOf('/') + 1);
 // fileName is now "somefilename.xy"
 
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(database_url));
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             request.setTitle("Download...");
             request.setDescription("Please wait...!");

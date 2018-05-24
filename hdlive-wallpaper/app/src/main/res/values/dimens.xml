@@ -10,4 +10,12 @@
     <dimen name="font_xxxlarge">32sp</dimen>
     <dimen name="font_medium">18sp</dimen>
 
+    <dimen name="x250d">250dp</dimen>
+    <dimen name="x200d">200dp</dimen>
+    <dimen name="x100d">100dp</dimen>
+    <dimen name="x50d">50dp</dimen>
+    <dimen name="x10d">10dp</dimen>
+    <dimen name="x3d">3dp</dimen>
+    <dimen name="t10d">10dp</dimen>
+
 </resources>

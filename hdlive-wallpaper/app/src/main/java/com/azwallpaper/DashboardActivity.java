@@ -80,7 +80,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             fab = findViewById(R.id.fab);
             fabCreateBackup = findViewById(R.id.fabCreateBackup);
-            fabCreateBackup.setVisibility(View.VISIBLE);
+            fabCreateBackup.setVisibility(View.GONE);
 
             fabRestoreBackup = findViewById(R.id.fabRestoreBackup);
 
