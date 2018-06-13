@@ -1,0 +1,150 @@
+{
+  "Uncategorized": {
+    "id": 16,
+    "name": "Uncategorized",
+    "level": "1"
+  },
+  "BLACK SKIRT": {
+    "id": 135,
+    "name": "BLACK SKIRT",
+    "level": "1"
+  },
+  "BOTTOM": {
+    "id": 136,
+    "name": "BOTTOM",
+    "level": "1"
+  },
+  "Clothing": {
+    "id": 104,
+    "name": "Clothing",
+    "level": "1",
+    "childs": {
+      "BLOCK PRINTED SKIRT": {
+        "id": 134,
+        "name": "BLOCK PRINTED SKIRT",
+        "level": "2"
+      },
+      "Kids": {
+        "id": 146,
+        "name": "Kids",
+        "level": "2",
+        "childs": {
+          "Pants": {
+            "id": 147,
+            "name": "Pants",
+            "level": "3"
+          },
+          "Shorts": {
+            "id": 148,
+            "name": "Shorts",
+            "level": "3"
+          }
+        }
+      },
+      "Men": {
+        "id": 138,
+        "name": "Men",
+        "level": "2",
+        "childs": {
+          "Jackets": {
+            "id": 145,
+            "name": "Jackets",
+            "level": "3"
+          },
+          "Shirts": {
+            "id": 159,
+            "name": "Shirts",
+            "level": "3"
+          }
+        }
+      },
+      "Women": {
+        "id": 142,
+        "name": "Women",
+        "level": "2",
+        "childs": {
+          "Kurtas": {
+            "id": 143,
+            "name": "Kurtas",
+            "level": "3"
+          },
+          "Tops": {
+            "id": 144,
+            "name": "Tops",
+            "level": "3"
+          }
+        }
+      }
+    }
+  },
+  "Dress": {
+    "id": 113,
+    "name": "Dress",
+    "level": "1",
+    "childs": {
+      "TUNIC": {
+        "id": 137,
+        "name": "TUNIC",
+        "level": "2"
+      }
+    }
+  },
+  "Jewellery": {
+    "id": 149,
+    "name": "Jewellery",
+    "level": "1",
+    "childs": {
+      "Fashion Jewellery": {
+        "id": 152,
+        "name": "Fashion Jewellery",
+        "level": "2",
+        "childs": {
+          "Hair Accessories": {
+            "id": 157,
+            "name": "Hair Accessories",
+            "level": "3"
+          },
+          "Necklaces & Pendants": {
+            "id": 158,
+            "name": "Necklaces & Pendants",
+            "level": "3"
+          }
+        }
+      },
+      "Precious Jewellery": {
+        "id": 151,
+        "name": "Precious Jewellery",
+        "level": "2",
+        "childs": {
+          "Earrings": {
+            "id": 156,
+            "name": "Earrings",
+            "level": "3"
+          },
+          "watch": {
+            "id": 155,
+            "name": "watch",
+            "level": "3"
+          }
+        }
+      },
+      "Silver Jewellery": {
+        "id": 150,
+        "name": "Silver Jewellery",
+        "level": "2",
+        "childs": {
+          "Nose Pins": {
+            "id": 154,
+            "name": "Nose Pins",
+            "level": "3"
+          },
+          "Rings": {
+            "id": 153,
+            "name": "Rings",
+            "level": "3"
+          }
+        }
+      }
+    }
+  }
+}

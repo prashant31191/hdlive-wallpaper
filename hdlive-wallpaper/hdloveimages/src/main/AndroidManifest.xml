@@ -30,6 +30,8 @@
             </intent-filter>
         </activity> <!-- Include the AdActivity configChanges and theme. -->
 
+
+
         <activity
             android:name=".ActivityEarnCreadit"
             android:label="@string/app_name" />
