@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical"
-    android:background="#212121">
+    android:background="#8000C853">
 
     <TextView
         android:id="@+id/eventsListEventRowText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"/>
+        android:textColor="@color/material_grey900"
+        android:typeface="sans"
+        android:text="123123asdasd"
+        android:textSize="16sp"/>
 </LinearLayout>

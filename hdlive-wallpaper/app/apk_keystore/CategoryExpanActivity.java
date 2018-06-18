@@ -279,10 +279,10 @@ public class CategoryExpanActivity extends AppCompatActivity {
                                 String currentDynamicKey2 = (String) keyMainJson2.next();
                                 App.showLog("==2222==Key==" + currentDynamicKey2);
 
-
                                 ChildModel childModel = new ChildModel("", currentDynamicKey2, "2");
-                                ArrayList<SubChildModel> arrayListSubChildModel = new ArrayList<>();
 
+
+                                ArrayList<SubChildModel> arrayListSubChildModel = new ArrayList<>();
                                 //if(currentDynamicKey2.contains("childs"))
                                 {
                                     // get the value of the dynamic key
@@ -338,11 +338,11 @@ public class CategoryExpanActivity extends AppCompatActivity {
                                             }
                                         }
                                     }
+
                                 }
                                 childModel.arrayListSubChildModel = arrayListSubChildModel;
                                 arrayListChildModel.add(childModel);
                             }
-
                         }
                     }
 
@@ -353,14 +353,8 @@ public class CategoryExpanActivity extends AppCompatActivity {
                 }
 
                 // set adapter
-                if(arrayListGroup !=null) {
-                    expandableListView.setAdapter(new ParentLevel(this, arrayListGroup));
-                    printAllData();
-                }
-                else
-                {
-                    App.showLog("====oops null data===arrayListGroup==");
-                }
+                expandableListView.setAdapter(new ParentLevel(this));
+                printAllData();
 
 
             } catch (Exception e) {
@@ -375,11 +369,9 @@ public class CategoryExpanActivity extends AppCompatActivity {
     public class ParentLevel extends BaseExpandableListAdapter {
 
         private Context context;
-        ArrayList<GroupModel> arrayListGroup = new ArrayList<>();
 
-        public ParentLevel(Context context,ArrayList<GroupModel> arrayListGroup) {
+        public ParentLevel(Context context) {
             this.context = context;
-            this.arrayListGroup = arrayListGroup;
         }
 
         @Override
@@ -394,19 +386,15 @@ public class CategoryExpanActivity extends AppCompatActivity {
 
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
             SecondLevelExpandableListView secondLevelELV = new SecondLevelExpandableListView(CategoryExpanActivity.this);
-
-            secondLevelELV.setAdapter(new SecondLevelAdapter(context,arrayListGroup.get(groupPosition).arrayListChildModel));
+            secondLevelELV.setAdapter(new SecondLevelAdapter(context));
             secondLevelELV.setGroupIndicator(null);
-
             return secondLevelELV;
-
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return 1;
+            return SECOND_LEVEL_COUNT;
         }
 
         @Override
@@ -416,7 +404,7 @@ public class CategoryExpanActivity extends AppCompatActivity {
 
         @Override
         public int getGroupCount() {
-            return arrayListGroup.size();
+            return FIRST_LEVEL_COUNT;
         }
 
         @Override
@@ -431,9 +419,6 @@ public class CategoryExpanActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.row_first, null);
                 TextView text = convertView.findViewById(R.id.eventsListEventRowText);
                 text.setText("FIRST LEVEL");
-
-                GroupModel groupModel = arrayListGroup.get(groupPosition);
-                text.setText(groupModel.id + " >> " + groupModel.name );
             }
             return convertView;
         }
@@ -465,11 +450,9 @@ public class CategoryExpanActivity extends AppCompatActivity {
     public class SecondLevelAdapter extends BaseExpandableListAdapter {
 
         private Context context;
-        ArrayList<ChildModel> arrayListChildModel = new ArrayList<>();
 
-        public SecondLevelAdapter(Context context,ArrayList<ChildModel> arrayListChildModel) {
+        public SecondLevelAdapter(Context context) {
             this.context = context;
-            this.arrayListChildModel = arrayListChildModel;
         }
 
         @Override
@@ -479,7 +462,7 @@ public class CategoryExpanActivity extends AppCompatActivity {
 
         @Override
         public int getGroupCount() {
-            return arrayListChildModel.size();
+            return 1;
         }
 
         @Override
@@ -493,10 +476,7 @@ public class CategoryExpanActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.row_second, null);
                 TextView text = convertView.findViewById(R.id.eventsListEventRowText);
-               // text.setText("SECOND LEVEL");
-
-                ChildModel childModel = arrayListChildModel.get(groupPosition);
-                text.setText(childModel.id + " >> " + childModel.name );
+                text.setText("SECOND LEVEL");
             }
             return convertView;
         }
@@ -517,16 +497,14 @@ public class CategoryExpanActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.row_third, null);
                 TextView text = convertView.findViewById(R.id.eventsListEventRowText);
-                //text.setText("THIRD LEVEL");
-                SubChildModel subChildModel = arrayListChildModel.get(groupPosition).arrayListSubChildModel.get(childPosition);
-                text.setText(subChildModel.id + " >> " + subChildModel.name );
+                text.setText("THIRD LEVEL");
             }
             return convertView;
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return arrayListChildModel.get(groupPosition).arrayListSubChildModel.size();
+            return THIRD_LEVEL_COUNT;
         }
 
         @Override
@@ -541,50 +519,20 @@ public class CategoryExpanActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void printAllData() {
-
-        App.showLog("=================================================================================");
-        App.showLog("=================================================================================");
-
-        String strData = "";
         for (GroupModel groupModel : arrayListGroup) {
 
-           // App.showLog(groupModel.id + "===GroupModel==" + groupModel.name);
-            App.showLog(groupModel.id + "=1=" + groupModel.name);
-            strData = strData + "\n"+groupModel.name;
 
+            App.showLog(groupModel.id + "===GroupModel==" + groupModel.name);
             for (ChildModel childModel : groupModel.arrayListChildModel) {
-                //App.showLog(childModel.id + "===ChildModel==" + childModel.name);
-                App.showLog(childModel.id + "=2=" + childModel.name);
-                strData = strData + "\n\t"+childModel.name;
+                App.showLog(childModel.id + "===ChildModel==" + childModel.name);
                 for (SubChildModel subChildModelModel : childModel.arrayListSubChildModel) {
-                    //App.showLog(subChildModelModel.id + "===SubChildModel==" + subChildModelModel.name);
-                    App.showLog(subChildModelModel.id + "=3=" + subChildModelModel.name);
-                    strData = strData + "\n\t\t"+subChildModelModel.name;
+                    App.showLog(subChildModelModel.id + "===SubChildModel==" + subChildModelModel.name);
                 }
             }
         }
-
-
-        App.showLog("=================================================================================");
-        App.showLog("=================================================================================");
-        App.showLog("====strData===\n"+strData);
-        App.showLog("=================================================================================");
-        App.showLog("=================================================================================");
     }
+
 
     class GroupModel {
 
@@ -599,6 +547,7 @@ public class CategoryExpanActivity extends AppCompatActivity {
             this.level = level;
         }
     }
+
 
     class ChildModel {
 
