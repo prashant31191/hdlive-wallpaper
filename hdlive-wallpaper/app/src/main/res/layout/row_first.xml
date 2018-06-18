@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="#d50000"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/eventsListEventRowText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:typeface="serif"
+        android:text="asdasd"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+</LinearLayout>
