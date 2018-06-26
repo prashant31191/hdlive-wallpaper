@@ -23,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -53,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -84,6 +87,10 @@ public class LocalWallpaperActivity extends AppCompatActivity {
 
     Realm realm;
 
+    Animation slide_down;
+    Animation slide_up;
+
+
     /**
      * Sets the Action Bar for new Android versions.
      */
@@ -114,6 +121,13 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             ivClose = findViewById(R.id.ivClose);
             tvSetWallpaper = findViewById(R.id.tvSetWallpaper);
             tvSetWallpaper.setTypeface(App.getFont_Regular());
+            //Load animation
+            slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.slide_down);
+
+            slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.slide_up);
+
 
             tvSetWallpaper.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,9 +186,17 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     progressBar.setVisibility(View.GONE);
-                    rlImage.setVisibility(View.GONE);
+
                     fabDownload.setVisibility(View.GONE);
                     fabShare.setVisibility(View.GONE);
+
+                    rlImage.startAnimation(slide_down);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            rlImage.setVisibility(View.GONE);
+                        }
+                    },400);
 
 
                 }
@@ -514,6 +536,7 @@ public class LocalWallpaperActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_list_grid, menu);
@@ -612,31 +635,39 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             holder.cvCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //App.expand2(rlImage);
-                    bitmap = null;
-                    rlImage.setVisibility(View.VISIBLE);//
-                    fabDownload.setVisibility(View.VISIBLE);//
-                    fabShare.setVisibility(View.VISIBLE);//
-                    progressBar.setVisibility(View.VISIBLE);
+                    try {
+                        //App.expand2(rlImage);
+                        if (bitmap != null)
+                            bitmap.recycle();
 
-                    App.splash_url = mList.get(position).thumbnail_url;
-                    App.showLog("==img==" + App.splash_url);
+                        bitmap = null;
+                        rlImage.setVisibility(View.VISIBLE);
+                        fabDownload.setVisibility(View.VISIBLE);
+                        fabShare.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
 
-                    Glide.with(LocalWallpaperActivity.this).load(App.splash_url).asBitmap().into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                            try {
-                                App.sharePrefrences.setPref(StaticData.key_splash_bg, App.splash_url);
-                                bitmap = resource;
-                                ivFullScreen.setImageBitmap(resource);
-                                progressBar.setVisibility(View.GONE);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                        rlImage.startAnimation(slide_up);
+
+                        App.splash_url = mList.get(position).thumbnail_url;
+                        App.showLog("==img==" + App.splash_url);
+
+                        Glide.with(LocalWallpaperActivity.this).load(App.splash_url).asBitmap().into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                try {
+                                    App.sharePrefrences.setPref(StaticData.key_splash_bg, App.splash_url);
+                                    bitmap = resource;
+                                    ivFullScreen.setImageBitmap(resource);
+                                    progressBar.setVisibility(View.GONE);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    });
-                    Glide.with(LocalWallpaperActivity.this).load(App.splash_url).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
-
+                        });
+                        Glide.with(LocalWallpaperActivity.this).load(App.splash_url).placeholder(R.drawable.ic_placeholder).into(ivFullScreen);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -751,6 +782,8 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                     fabDownload.setVisibility(View.VISIBLE);//
                     fabShare.setVisibility(View.VISIBLE);//
                     progressBar.setVisibility(View.VISIBLE);
+
+                    rlImage.startAnimation(slide_up);
 
                     App.splash_url = items.get(position).thumbnail_url;
                     App.showLog("==img==" + App.splash_url);

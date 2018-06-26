@@ -52,8 +52,8 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.d(TAG, "----------startActivityIntent----------");
-                    Intent intent = new Intent(SplashActivity.this, CategoryExpanActivity.class);
-                    //Intent intent = new Intent(SplashActivity.this, DashboardActivity.class);
+                    //Intent intent = new Intent(SplashActivity.this, CategoryExpanActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, DashboardActivity.class);
                     startActivity(intent);
                     finish();
                 }
