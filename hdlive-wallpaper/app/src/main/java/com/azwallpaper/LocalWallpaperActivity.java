@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -55,7 +54,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.fabric.sdk.android.services.concurrency.AsyncTask;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -112,7 +110,6 @@ public class LocalWallpaperActivity extends AppCompatActivity {
             setContentView(R.layout.content_dashboard);
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
 
             rlImage = findViewById(R.id.rlImage);
             fabDownload = findViewById(R.id.fabDownload);
@@ -562,10 +559,12 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                     item.setChecked(false);
                     item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_grid_on_white_24dp));
 
+
+
                     if (realm != null) {
 
                         //insertValues();
-                        getWallpaperValues(false);
+                        getWallpaperValues(true);
 
                     } else {
                         App.showLog("=====realm===null==");
@@ -575,10 +574,11 @@ public class LocalWallpaperActivity extends AppCompatActivity {
                     item.setChecked(true);
                     item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_list_white_24dp));
 
+
                     if (realm != null) {
 
                         //insertValues();
-                        getWallpaperValues(true);
+                        getWallpaperValues(false);
 
                     } else {
                         App.showLog("=====realm===null==");

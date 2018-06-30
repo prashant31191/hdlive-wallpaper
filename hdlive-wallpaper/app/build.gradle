@@ -8,7 +8,7 @@ buildscript {
         // can be updated quickly in response to Android tooling updates
 
         // We recommend changing it to the latest version from our changelog:
-        // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
+        // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin - 594 -
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
@@ -28,8 +28,8 @@ android {
         applicationId "com.azwallpaper"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.1.1"
 
 
         // Enabling multidex support.
